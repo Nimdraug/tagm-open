@@ -1,0 +1,11 @@
+# Sublime
+*.sublime*
+
+# Conf
+tagm-open.conf
+
+# Notes
+notes-*
+
+# Tagm db
+.tagm.db
