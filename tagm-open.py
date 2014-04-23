@@ -1,13 +1,21 @@
-import ConfigParser, sys, os.path
-
+import ConfigParser, sys, os.path, argparse
 from tagm import (
     TagmDB, find_db, process_paths, parse_tagpaths
 )
 from subprocess import call
 
+# Setup argparser
+parser = argparse.ArgumentParser()
+parser.add_argument( '--tags', action = 'store_true' )
+parser.add_argument( '--conf', action = 'store', default = '~/config/tagm-open.conf' )
+parser.add_argument( 'files_or_tags', nargs = '+' )
+
+args = parser.parse_args()
+
+# Load config
 conf = ConfigParser.ConfigParser()
 
-conf.read( 'tagm-open.conf' )
+conf.read( os.path.expanduser( args.conf ) )
 
 mimes = []
 tagmatch = []
@@ -24,7 +32,8 @@ dbpath = find_db()
 print 'using db at', dbpath
 db = TagmDB( os.path.join( dbpath, '.tagm.db' ) )
 
-for f in process_paths( dbpath, [ sys.argv[1] ] ):
+# Match file(s)
+for f in process_paths( dbpath, args.files_or_tags ):
     print 'opening ', f
 
     tags = db.get_obj_tags( [ f ] )
