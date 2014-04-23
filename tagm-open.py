@@ -7,7 +7,7 @@ from subprocess import call
 # Setup argparser
 parser = argparse.ArgumentParser()
 parser.add_argument( '--tags', action = 'store_true' )
-parser.add_argument( '--conf', action = 'store', default = '~/config/tagm-open.conf' )
+parser.add_argument( '--conf', action = 'store', default = '~/.config/tagm-open.conf' )
 parser.add_argument( 'files_or_tags', nargs = '+' )
 
 args = parser.parse_args()
