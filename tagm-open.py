@@ -29,25 +29,17 @@ for sect in conf.sections():
         tagmatch.append( ( tags, sect ) )
 
 dbpath = find_db()
-print 'using db at', dbpath
 db = TagmDB( os.path.join( dbpath, '.tagm.db' ) )
 
 # Match file(s)
 for f in process_paths( dbpath, args.files_or_tags ):
-    print 'opening ', f
-
     tags = db.get_obj_tags( [ f ] )
-    print tags
-
     for mtags, sect in tagmatch:
-        print 'Matching', mtags
         matches = filter( lambda tag: tag in mtags, tags )
         if matches == mtags:
-            print 'Matched!'
 
             opts = dict( conf.items( sect ) )
             command = opts['command'].replace( '%n', f )
-            print command
             call( command, shell = True )
 
             break
