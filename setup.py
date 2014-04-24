@@ -11,6 +11,10 @@ setup(
     license = 'MIT',
     description = 'Command tool to open files based on it\'s tagm tags.',
 
+    install_requires = [
+        'tagm'
+    ],
+
     py_modules = [
         'tagm_open'
     ],
