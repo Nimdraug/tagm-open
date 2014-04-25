@@ -1,9 +1,14 @@
 #!/usr/bin/env python2
-import ConfigParser, sys, os.path, argparse
+import ConfigParser, sys, os.path, argparse, fnmatch
 from tagm import (
     TagmDB, find_db, process_paths, parse_tagpaths
 )
-from subprocess import call
+from subprocess import call, check_output
+
+def call_command( conf, sect, f ):
+    opts = dict( conf.items( sect ) )
+    command = opts['command'].replace( '%n', f )
+    call( command, shell = True )
 
 def main():
     # Setup argparser
@@ -48,12 +53,15 @@ def main():
         for mtags, sect in tagmatch:
             matches = filter( lambda tag: tag in mtags, tags )
             if matches == mtags:
-
-                opts = dict( conf.items( sect ) )
-                command = opts['command'].replace( '%n', f )
-                call( command, shell = True )
-
+                call_command( conf, sect, f )
                 break
+        else:
+            mime = check_output( [ 'file', '-b', '--mime-type', f ] )
+            for mmime, sect in mimes:
+                if fnmatch.fnmatch( mime, mmime ):
+                    call_command( conf, sect, f )
+                    break
+
 
 if __name__ == '__main__':
     main()
