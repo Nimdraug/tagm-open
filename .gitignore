@@ -9,3 +9,8 @@ notes-*
 
 # Tagm db
 .tagm.db
+
+# Build stuff
+build/
+dist/
+tagm_open.egg-info/
