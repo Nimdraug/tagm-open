@@ -35,7 +35,10 @@ def main():
 
     # Get files
     if args.tags:
-        files = db.get( parse_tagpaths( args.files_or_tags ) )
+        tagpaths = []
+        for tp in args.files_or_tags:
+            tagpaths += tp.split( ',' )
+        files = db.get( parse_tagpaths( tagpaths ) )
     else:
         files = process_paths( dbpath, args.files_or_tags )
 
