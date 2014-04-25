@@ -33,8 +33,14 @@ def main():
     dbpath = find_db()
     db = TagmDB( os.path.join( dbpath, '.tagm.db' ) )
 
+    # Get files
+    if args.tags:
+        files = db.get( parse_tagpaths( args.files_or_tags ) )
+    else:
+        files = process_paths( dbpath, args.files_or_tags )
+
     # Match file(s)
-    for f in process_paths( dbpath, args.files_or_tags ):
+    for f in files:
         tags = db.get_obj_tags( [ f ] )
         for mtags, sect in tagmatch:
             matches = filter( lambda tag: tag in mtags, tags )
