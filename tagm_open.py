@@ -56,7 +56,7 @@ def main():
                 call_command( conf, sect, f )
                 break
         else:
-            f = dbpath + f
+            f = os.path.join( dbpath, f )
 
             mime = check_output( [ 'file', '-b', '--mime-type', f ] )
             for mmime, sect in mimes:
