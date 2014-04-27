@@ -30,7 +30,8 @@ def main():
     for sect in conf.sections():
         opts = dict( conf.items( sect ) )
         if 'mime' in opts:
-            mimes.append( ( opts['mime'], sect ) )
+            for mmime in opts['mime'].split(','):
+                mimes.append( ( mmime, sect ) )
         if 'tags' in opts:
             tags = parse_tagpaths( opts['tags'].split( ',' ) )
             tagmatch.append( ( tags, sect ) )
