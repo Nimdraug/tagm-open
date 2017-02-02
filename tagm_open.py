@@ -59,7 +59,7 @@ def main():
         else:
             f = os.path.join( dbpath, f )
 
-            mime = check_output( [ 'file', '-b', '--mime-type', f ] )
+            mime = check_output( [ 'file', '-b', '--mime-type', f ] ).strip()
             for mmime, sect in mimes:
                 if fnmatch.fnmatch( mime, mmime ):
                     call_command( conf, sect, f )
